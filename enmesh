@@ -1,0 +1,24 @@
+#!/usr/bin/env ringo
+
+var Java = require('ringo/engine');
+
+var optionsParser = new (require('ringo/args').Parser);
+optionsParser.addOption('h', 'help', null, 'List these options');
+optionsParser.addOption('z', 'config', '<./config/hazelcast.xml>', 'Hazelcast configuration file');
+optionsParser.addOption('m', 'mode', '(full|lite)', 'Run as a full or lite Hazelcast node');
+optionsParser.addOption('d', 'daemonize', null, 'Run as a daemon (not interactive)');
+exports.options = optionsParser.parse(system.args.slice(1), {mode: 'full'});
+
+if (exports.options.help) {
+    system.stderr.print("enmesh - Hazelcast on RingoJS");
+    system.stderr.print(optionsParser.help());
+    system.exit();
+}
+
+require.paths.push('./lib', './config');
+addToClasspath('./lib');
+addToClasspath('./src');
+
+var {Hazelcast} = require('hazelcast');
+
+if (!exports.options.daemonize) require('ringo/shell').start();
