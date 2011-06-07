@@ -6,14 +6,14 @@ _This project is at a very early stage, but it currently provides a Javascript R
 
 ## Examples
 
-  # ./enmesh
-  
-  >> users = Hazelcast.engine.getMap('users')
-  >> users.put('joe', 'data')
-  null
-  >> users.get('joe')
-  'data'
-  
-  >> callback = function(value) console.log(value.get())
-  >> Hazelcast.execute(Packages.enmesh.Task, callback)
-  [info] {member=Member [192.168.1.100:5701]} (<stdin>:111)
+    $ ./enmesh
+    
+    >> users = Hazelcast.engine.getMap('users')
+    >> users.put('joe', 'data')
+    null
+    >> users.get('joe')
+    'data'
+    
+    >> callback = function(value) console.log(value.get())
+    >> Hazelcast.execute(Packages.enmesh.Task, callback)
+    [info] {member=Member [192.168.1.100:5701]} (<stdin>:111)
