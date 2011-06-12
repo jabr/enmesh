@@ -7,6 +7,7 @@ optionsParser.addOption('h', 'help', null, 'List these options');
 optionsParser.addOption('z', 'config', '<./config/hazelcast.xml>', 'Hazelcast configuration file');
 optionsParser.addOption('m', 'mode', '(full|lite)', 'Run as a full or lite Hazelcast node');
 optionsParser.addOption('d', 'daemonize', null, 'Run as a daemon (not interactive)');
+optionsParser.addOption(null, 'no-hazelcast', null, 'Do not load Hazelcast module on startup');
 exports.options = optionsParser.parse(system.args.slice(1), {mode: 'full'});
 
 if (exports.options.help) {
@@ -16,9 +17,12 @@ if (exports.options.help) {
 }
 
 require.paths.push('./lib', './config');
-addToClasspath('./lib');
-addToClasspath('./src');
+addToClasspath('./jars');
+addToClasspath('./src/mirah');
 
 var {Hazelcast} = require('hazelcast');
+if (!exports.options.noHazelcast) Hazelcast.load();
+
+var {Workers} = require('workers');
 
 if (!exports.options.daemonize) require('ringo/shell').start();
