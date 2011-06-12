@@ -18,7 +18,7 @@ if (exports.options.help) {
 
 require.paths.push('./lib', './config');
 addToClasspath('./jars');
-addToClasspath('./src/mirah');
+addToClasspath('./src/main/mirah');
 
 var {Hazelcast} = require('hazelcast');
 if (!exports.options.noHazelcast) Hazelcast.load();
