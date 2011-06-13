@@ -17,12 +17,16 @@ if (exports.options.help) {
 }
 
 require.paths.push('./lib', './config');
+
 addToClasspath('./jars');
+addToClasspath('uuid-3.2.0.jar');
+
 addToClasspath('./src/main/mirah');
 
 var {Hazelcast} = require('hazelcast');
 if (!exports.options.noHazelcast) Hazelcast.load();
 
 var {Workers} = require('workers');
+var {Cassandra} = require('cassandra');
 
 if (!exports.options.daemonize) require('ringo/shell').start();
