@@ -23,6 +23,9 @@ abstract class Worker
   end
 end
 
+import java.lang.Thread
+import java.lang.InterruptedException
+
 class Workers
   def self.register(name:string, worker:Worker):void
     @workers ||= {}
@@ -34,5 +37,30 @@ class Workers
     worker = Worker(@workers[name])
     return nil unless worker
     return worker.apply(parameter)
+  end
+  
+  def self.processQueue(queueName:string, worker:Worker):Thread
+    processQueue(queueName, null, worker)
+  end
+  
+  def self.processQueue(inputQueueName:string, outputQueueName:string, worker:Worker):Thread
+    thread = Thread.new do
+      inputQueue = Hazelcast.getQueue(inputQueueName)
+      outputQueue = Hazelcast.getQueue(outputQueueName) if outputQueueName
+      
+      begin
+        while true
+          request = Serializable(inputQueue.take())
+          if request
+            result = worker.apply(request)
+            outputQueue.put(dynamic(result)) if outputQueue
+          end
+        end
+      rescue InterruptedException => e
+      end
+    end
+    
+    thread.start
+    return thread
   end
 end

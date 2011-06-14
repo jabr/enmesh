@@ -77,3 +77,69 @@ class DeferredFunction < Deferred
     @result
   end
 end
+
+class Present
+  implements Future
+  
+  def initialize(result:dynamic)
+    @result = result
+  end
+  
+  def get:dynamic
+    @result
+  end
+  
+  def get(timeout:long, unit:TimeUnit):dynamic
+    @result
+  end
+  
+  def cancel(mayInterruptIfRunning:boolean):boolean
+    false
+  end
+  
+  def isCancelled:boolean
+    false
+  end
+  
+  def isDone:boolean
+    true
+  end
+end
+
+import java.util.concurrent.CountDownLatch
+
+class ResolvableFuture
+  implements Future
+  
+  def initialize
+    @latch = CountDownLatch.new(1)
+    @result = dynamic(nil)
+  end
+  
+  def resolve(result:dynamic):void
+    @result = result
+    @latch.countDown()
+  end
+  
+  def get:dynamic
+    @latch.await
+    return @result
+  end
+  
+  def get(timeout:long, unit:TimeUnit):dynamic
+    @latch.await(timeout, unit)
+    return @result
+  end
+  
+  def cancel(mayInterruptIfRunning:boolean):boolean
+    false
+  end
+  
+  def isCancelled:boolean
+    false
+  end
+  
+  def isDone:boolean
+    @latch.getCount() == 0
+  end
+end
