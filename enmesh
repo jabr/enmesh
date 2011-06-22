@@ -7,6 +7,8 @@ optionsParser.addOption('h', 'help', null, 'List these options');
 optionsParser.addOption('z', 'config', '<./config/hazelcast.xml>', 'Hazelcast configuration file');
 optionsParser.addOption('m', 'mode', '(full|lite)', 'Run as a full or lite Hazelcast node');
 optionsParser.addOption('d', 'daemonize', null, 'Run as a daemon (not interactive)');
+optionsParser.addOption('c', 'console', null, 'Start the admin web console');
+optionsParser.addOption('p', 'port', 8765, 'Set the port used by the web console');
 optionsParser.addOption(null, 'no-hazelcast', null, 'Do not load Hazelcast module on startup');
 exports.options = optionsParser.parse(system.args.slice(1), {mode: 'full'});
 
@@ -28,5 +30,10 @@ if (!exports.options.noHazelcast) Hazelcast.load();
 
 var {Workers} = require('workers');
 var {Cassandra} = require('cassandra');
+
+if (exports.options.console) {
+    var {Console} = require('enmesh/console/server');
+    Console.start(exports.options.port);
+}
 
 if (!exports.options.daemonize) require('ringo/shell').start();
