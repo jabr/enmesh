@@ -1,0 +1,16 @@
+#partitions, #members {
+  overflow: auto;
+}
+
+#members .member, #partitions .partition {
+  float: left;
+  color: white;
+  padding: 0.2em;
+  margin: 0.2em;
+}
+
+#partitions .partition {
+  font-size: 0.8em;
+  width: 2em;
+  height: 2em;
+}
