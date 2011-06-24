@@ -17,13 +17,33 @@ head.js(
 <link rel="stylesheet" type="text/css" href="core.css">
 </head>
 <body>
-<div id="members">
-  Members
-  <div class="data"></div>
+
+<div id="content">
+  <div id="members">
+    Members
+    <div class="data"></div>
+  </div>
+
+  <div id="navigation">
+    <a id="partitions-link" href="#partitions">Partitions</a>
+    <a id="instances-link" href="#instances">Instances</a>
+  </div>
+  
+  <div id="partitions" class="view">
+    Partitions
+    <div class="data"></div>
+  </div>
+  
+  <div id="instances" class="view">
+    Instances
+    <div class="data"></div>
+  </div>
+  
+  <div id="instance" class="view">
+    Instance / <span class="type">type</span> / <span class="name">name</span>
+    <table class="data"></table>
+  </div>
 </div>
-<div id="partitions">
-  Partitions
-  <div class="data"></div>
-</div>
+
 </body>
 </html>

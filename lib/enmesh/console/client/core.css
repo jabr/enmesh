@@ -1,5 +1,15 @@
-#partitions, #members {
+#navigation li {
+  display: inline;
+}
+
+#members, .view {
   overflow: auto;
+  padding: 0.1em;
+  border: 1px solid black;
+}
+
+#navigation {
+  margin: 0.5em;
 }
 
 #members .member, #partitions .partition {
@@ -13,4 +23,41 @@
   font-size: 0.8em;
   width: 2em;
   height: 2em;
+}
+
+#instances .data {
+  margin-left: 1em;
+  
+}
+
+#instance table.data {
+  border-collapse: collapse;
+}
+
+#instance table.data td {
+  padding: 0.2em 0.5em;
+}
+
+#instance table.data tr {
+  background-color: #eee;
+}
+
+#instance .data tr.alt {
+  background-color: transparent;
+}
+
+.view {
+  display: none;
+}
+
+#content.partitions #partitions.view {
+  display: block;
+}
+
+#content.instances #instances.view {
+  display: block;
+}
+
+#content.instance #instance.view {
+  display: block;
 }
