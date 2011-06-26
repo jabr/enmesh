@@ -26,7 +26,11 @@ addToClasspath('uuid-3.2.0.jar');
 addToClasspath('./src/main/mirah');
 
 var {Hazelcast} = require('hazelcast');
-if (!exports.options.noHazelcast) Hazelcast.load();
+var {Entities} = require('enmesh/entities');
+if (!exports.options.noHazelcast) {
+    Hazelcast.load();
+    if (exports.options.mode != 'lite') Entities.Manager.start();
+}
 
 var {Workers} = require('workers');
 var {Cassandra} = require('cassandra');
